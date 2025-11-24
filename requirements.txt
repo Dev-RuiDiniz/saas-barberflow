@@ -1,0 +1,35 @@
+django
+djangorestframework
+django-cors-headers
+python-dotenv
+
+# Autenticação
+djangorestframework-simplejwt
+
+# Banco de Dados
+psycopg2-binary
+
+# Multitenancy por coluna
+django-tenant-schemas
+django-multitenant
+
+# Uploads e arquivos
+Pillow
+
+# Agendamentos e datas
+python-dateutil
+
+# Documentação da API
+drf-spectacular
+
+# Cache e performance
+redis
+
+# Logs
+loguru
+
+# Testes
+pytest
+pytest-django
+pytest-cov
+factory-boy

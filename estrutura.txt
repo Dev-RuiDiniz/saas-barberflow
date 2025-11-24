@@ -1,0 +1,94 @@
+SAAS-BARBERFLOW
+├── README.md
+├── estrutura.txt
+├── requirements.txt
+├── .gitignore
+├── docker-compose.yml
+├── Dockerfile
+├── manage.py
+
+├── config/
+│   ├── __init__.py
+│   ├── settings.py
+│   ├── urls.py
+│   ├── wsgi.py
+│   ├── asgi.py
+│   └── multitenancy_middleware.py
+
+├── core/
+│   ├── __init__.py
+│   ├── utils.py
+│   └── permissions.py
+
+├── tenants/
+│   ├── __init__.py
+│   ├── models.py       # Estabelecimentos + controladores de tenant
+│   ├── middleware.py   # Filtragem automática por tenant_id
+│   └── selectors.py
+
+├── apps/
+│   ├── accounts/       # Usuários e autenticação
+│   │   ├── __init__.py
+│   │   ├── models.py
+│   │   ├── serializers.py
+│   │   ├── views.py
+│   │   ├── urls.py
+│   │   └── services.py
+│   │
+│   ├── establishments/ # Dados do salão/barbearia
+│   │   ├── __init__.py
+│   │   ├── models.py
+│   │   ├── serializers.py
+│   │   ├── views.py
+│   │   ├── urls.py
+│   │   └── services.py
+│   │
+│   ├── employees/      # Funcionários
+│   │   ├── models.py
+│   │   ├── serializers.py
+│   │   ├── views.py
+│   │   ├── urls.py
+│   │   └── services.py
+│   │
+│   ├── services/       # Serviços oferecidos pelo salão
+│   │   ├── models.py
+│   │   ├── serializers.py
+│   │   ├── views.py
+│   │   ├── urls.py
+│   │   └── services.py
+│   │
+│   ├── clients/        # Clientes
+│   │   ├── models.py
+│   │   ├── serializers.py
+│   │   ├── views.py
+│   │   ├── urls.py
+│   │   └── services.py
+│   │
+│   ├── scheduling/     # Agendamentos
+│   │   ├── models.py
+│   │   ├── serializers.py
+│   │   ├── views.py
+│   │   ├── urls.py
+│   │   └── services.py
+
+├── public_api/
+│   ├── __init__.py
+│   ├── serializers.py
+│   ├── views.py        # API pública de agendamento
+│   └── urls.py
+
+├── static/
+│   └── uploads/
+
+├── templates/
+│   └── public_booking_page.html
+
+├── tests/
+│   ├── test_accounts.py
+│   ├── test_scheduling.py
+│   └── test_api_endpoints.py
+
+└── docs/
+    ├── architecture.md
+    ├── api_endpoints.md
+    └── multitenancy.md

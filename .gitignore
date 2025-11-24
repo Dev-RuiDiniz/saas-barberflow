@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+.venv/
+venv/
+.env
+*.log
+
+# Django
+media/
+staticfiles/
+static/
+db.sqlite3
+
+# Migrations
+*/migrations/__pycache__/
+*/migrations/*.py
+
+# IDEs
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+
+# Frontend
+frontend/node_modules/
+frontend/build/
+frontend/dist/
+
+# Docker
+*.pid
+*.sock
+
+# Tests
+.coverage
+htmlcov/
+.cache/
