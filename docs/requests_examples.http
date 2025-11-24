@@ -1,0 +1,29 @@
+Para testar via VSCode:
+
+### **docs/requests_examples.http**
+```http
+### Listar clientes
+GET http://localhost:8000/api/clients/
+X-Tenant: barber1
+
+### Criar cliente
+POST http://localhost:8000/api/clients/
+X-Tenant: barber1
+Content-Type: application/json
+
+{
+  "name": "Maria",
+  "phone": "11912345678"
+}
+
+### Criar agendamento
+POST http://localhost:8000/api/scheduling/
+X-Tenant: barber1
+Content-Type: application/json
+
+{
+  "client": 1,
+  "employee": 2,
+  "service": 3,
+  "datetime": "2025-02-10T10:00:00"
+}

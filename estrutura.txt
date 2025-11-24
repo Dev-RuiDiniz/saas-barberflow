@@ -1,94 +1,126 @@
-SAAS-BARBERFLOW
-├── README.md
-├── estrutura.txt
-├── requirements.txt
+saas-barberflow/
+│
+├── backend/
+│   ├── Dockerfile
+│   ├── docker-compose.yml
+│   ├── requirements.txt
+│   ├── manage.py
+│   ├── config/
+│   │   ├── __init__.py
+│   │   ├── settings.py
+│   │   ├── urls.py
+│   │   ├── wsgi.py
+│   │   ├── asgi.py
+│   │
+│   ├── core/
+│   │   ├── __init__.py
+│   │   ├── utils.py
+│   │   ├── permissions.py
+│   │   ├── multitenancy_middleware.py
+│   │
+│   ├── tenants/
+│   │   ├── __init__.py
+│   │   ├── models.py          # Establishment
+│   │   ├── serializers.py
+│   │   ├── views.py
+│   │   ├── urls.py
+│   │   ├── tests/
+│   │
+│   ├── apps/
+│   │   ├── clients/
+│   │   │   ├── __init__.py
+│   │   │   ├── models.py      # Client
+│   │   │   ├── serializers.py
+│   │   │   ├── views.py
+│   │   │   ├── urls.py
+│   │   │   ├── tests/
+│   │   │
+│   │   ├── employees/
+│   │   │   ├── __init__.py
+│   │   │   ├── models.py      # Employee
+│   │   │   ├── serializers.py
+│   │   │   ├── views.py
+│   │   │   ├── urls.py
+│   │   │   ├── tests/
+│   │   │
+│   │   ├── services/
+│   │   │   ├── __init__.py
+│   │   │   ├── models.py      # Service
+│   │   │   ├── serializers.py
+│   │   │   ├── views.py
+│   │   │   ├── urls.py
+│   │   │   ├── tests/
+│   │   │
+│   │   ├── scheduling/
+│   │       ├── __init__.py
+│   │       ├── models.py      # Scheduling
+│   │       ├── serializers.py
+│   │       ├── views.py
+│   │       ├── urls.py
+│   │       ├── services.py    # create_scheduling(), regras
+│   │       ├── tests/
+│   │
+│   ├── public_api/
+│   │   ├── __init__.py
+│   │   ├── urls.py
+│   │   ├── views.py            # API pública (ex.: agendamentos)
+│   │
+│   ├── static/
+│   │   └── uploads/
+│   │
+│   ├── templates/
+│
+│   ├── tests/
+│   │   ├── __init__.py
+│   │   ├── test_auth.py
+│   │   ├── test_multitenancy.py
+│   │   ├── test_endpoints.py
+│
+│   ├── docs/
+│       ├── api.md
+│       ├── architecture.md
+│       ├── multitenancy.md
+│       ├── ERD.png
+│
+│
+├── frontend/
+│   ├── package.json
+│   ├── next.config.js
+│   ├── Dockerfile
+│   ├── public/
+│   ├── src/
+│   │   ├── app/
+│   │   │   ├── layout.tsx
+│   │   │   ├── page.tsx
+│   │   │   ├── dashboard/
+│   │   │   ├── auth/
+│   │   │   ├── clients/
+│   │   │   ├── employees/
+│   │   │   ├── services/
+│   │   │   └── scheduling/
+│   │   ├── components/
+│   │   │   ├── Navbar.tsx
+│   │   │   ├── Sidebar.tsx
+│   │   │   ├── TenantSwitcher.tsx
+│   │   │   ├── Table.tsx
+│   │   │   └── Button.tsx
+│   │   ├── lib/
+│   │   │   ├── api.ts (fetch API)
+│   │   │   ├── auth.ts
+│   │   │   └── helpers.ts
+│   │   ├── styles/
+│
+│
+├── infra/
+│   ├── nginx/
+│   │   ├── default.conf
+│   ├── docker/
+│   │   ├── production/
+│   │   │   ├── docker-compose.yml
+│   │   │   ├── Dockerfile.backend
+│   │   │   ├── Dockerfile.frontend
+│   ├── kubernetes/ (opcional futuro)
+│
 ├── .gitignore
-├── docker-compose.yml
-├── Dockerfile
-├── manage.py
-
-├── config/
-│   ├── __init__.py
-│   ├── settings.py
-│   ├── urls.py
-│   ├── wsgi.py
-│   ├── asgi.py
-│   └── multitenancy_middleware.py
-
-├── core/
-│   ├── __init__.py
-│   ├── utils.py
-│   └── permissions.py
-
-├── tenants/
-│   ├── __init__.py
-│   ├── models.py       # Estabelecimentos + controladores de tenant
-│   ├── middleware.py   # Filtragem automática por tenant_id
-│   └── selectors.py
-
-├── apps/
-│   ├── accounts/       # Usuários e autenticação
-│   │   ├── __init__.py
-│   │   ├── models.py
-│   │   ├── serializers.py
-│   │   ├── views.py
-│   │   ├── urls.py
-│   │   └── services.py
-│   │
-│   ├── establishments/ # Dados do salão/barbearia
-│   │   ├── __init__.py
-│   │   ├── models.py
-│   │   ├── serializers.py
-│   │   ├── views.py
-│   │   ├── urls.py
-│   │   └── services.py
-│   │
-│   ├── employees/      # Funcionários
-│   │   ├── models.py
-│   │   ├── serializers.py
-│   │   ├── views.py
-│   │   ├── urls.py
-│   │   └── services.py
-│   │
-│   ├── services/       # Serviços oferecidos pelo salão
-│   │   ├── models.py
-│   │   ├── serializers.py
-│   │   ├── views.py
-│   │   ├── urls.py
-│   │   └── services.py
-│   │
-│   ├── clients/        # Clientes
-│   │   ├── models.py
-│   │   ├── serializers.py
-│   │   ├── views.py
-│   │   ├── urls.py
-│   │   └── services.py
-│   │
-│   ├── scheduling/     # Agendamentos
-│   │   ├── models.py
-│   │   ├── serializers.py
-│   │   ├── views.py
-│   │   ├── urls.py
-│   │   └── services.py
-
-├── public_api/
-│   ├── __init__.py
-│   ├── serializers.py
-│   ├── views.py        # API pública de agendamento
-│   └── urls.py
-
-├── static/
-│   └── uploads/
-
-├── templates/
-│   └── public_booking_page.html
-
-├── tests/
-│   ├── test_accounts.py
-│   ├── test_scheduling.py
-│   └── test_api_endpoints.py
-
-└── docs/
-    ├── architecture.md
-    ├── api_endpoints.md
-    └── multitenancy.md
+├── README.md
+└── Makefile (build, test, lint, migrate)
