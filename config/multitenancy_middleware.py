@@ -1,29 +1,19 @@
 from tenants.models import Establishment
-from django.http import JsonResponse
+from django.http import Http404
 
 class TenantMiddleware:
-    """
-    Middleware simples para identificar o tenant via subdomínio.
-    Exemplo: rui.saas-barberflow.com -> tenant = rui
-    """
-
     def __init__(self, get_response):
         self.get_response = get_response
 
     def __call__(self, request):
+        tenant_id = request.headers.get("X-Tenant-ID")
 
-        host = request.get_host().split(":")[0]
-        parts = host.split(".")
+        if not tenant_id:
+            raise Http404("Tenant não informado")
 
-        if len(parts) > 2:  # subdomínio
-            subdomain = parts[0]
-
-            try:
-                tenant = Establishment.objects.get(subdomain=subdomain)
-                request.tenant = tenant
-            except Establishment.DoesNotExist:
-                return JsonResponse({"error": "Invalid tenant"}, status=404)
-        else:
-            request.tenant = None  # acesso sem tenant (API pública)
+        try:
+            request.tenant = Establishment.objects.get(id=tenant_id)
+        except Establishment.DoesNotExist:
+            raise Http404("Tenant inválido")
 
         return self.get_response(request)

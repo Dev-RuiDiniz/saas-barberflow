@@ -1,8 +1,11 @@
 from django.db import models
-from tenants.models import Establishment
 
-class BaseTenantModel(models.Model):
-    establishment = models.ForeignKey(Establishment, on_delete=models.CASCADE)
+class Employee(models.Model):
+    tenant = models.ForeignKey("tenants.Establishment", on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    role = models.CharField(max_length=100)  # barbeiro, cabeleireiro etc.
+    phone = models.CharField(max_length=20)
+    active = models.BooleanField(default=True)
 
-    class Meta:
-        abstract = True
+    def __str__(self):
+        return self.name

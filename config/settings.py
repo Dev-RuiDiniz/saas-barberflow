@@ -3,14 +3,10 @@ import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = "change_me_later"
+SECRET_KEY = "sua-secret-key-aqui"
 DEBUG = True
-
 ALLOWED_HOSTS = ["*"]
 
-# -------------------------
-# APPS
-# -------------------------
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -19,37 +15,24 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 
-    # Terceiros
+    # Third-party
     "rest_framework",
-    "rest_framework.authtoken",
-    "corsheaders",
 
-    # Apps principais
+    # Internal apps
     "core",
     "tenants",
-
-    # Apps do sistema
     "apps.accounts",
     "apps.establishments",
     "apps.employees",
     "apps.services",
     "apps.clients",
     "apps.scheduling",
-
-    # API pública
     "public_api",
 ]
 
-# -------------------------
-# MIDDLEWARE
-# -------------------------
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-
-    # CORS
-    "corsheaders.middleware.CorsMiddleware",
-
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -62,9 +45,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "config.urls"
 
-# -------------------------
-# TEMPLATES
-# -------------------------
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -78,40 +58,21 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
             ],
         },
-    },
+    }
 ]
 
 WSGI_APPLICATION = "config.wsgi.application"
+ASGI_APPLICATION = "config.asgi.application"
 
-# -------------------------
-# DATABASE
-# -------------------------
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "barberflow",
-        "USER": "postgres",
-        "PASSWORD": "postgres",
-        "HOST": "localhost",
-        "PORT": 5432,
+        "ENGINE": "django.db.backends.sqlite3",  # futuramente migramos para Postgres
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
 
-# -------------------------
-# DRF SETTINGS
-# -------------------------
-REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework.authentication.TokenAuthentication",
-    ],
-    "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.IsAuthenticated",
-    ],
-}
+AUTH_PASSWORD_VALIDATORS = []
 
-# -------------------------
-# STATIC & MEDIA
-# -------------------------
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [BASE_DIR / "static"]
@@ -119,7 +80,12 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 MEDIA_URL = "/uploads/"
 MEDIA_ROOT = BASE_DIR / "static/uploads"
 
-# -------------------------
-# CORS
-# -------------------------
-CORS_ALLOW_ALL_ORIGINS = True
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated"
+    ],
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
+    ],
+}

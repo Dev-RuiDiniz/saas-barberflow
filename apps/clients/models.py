@@ -1,8 +1,11 @@
 from django.db import models
-from tenants.models import Establishment
 
-class BaseTenantModel(models.Model):
-    establishment = models.ForeignKey(Establishment, on_delete=models.CASCADE)
+class Client(models.Model):
+    tenant = models.ForeignKey("tenants.Establishment", on_delete=models.CASCADE)
+    name = models.CharField(max_length=120)
+    phone = models.CharField(max_length=20)
+    email = models.EmailField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
-    class Meta:
-        abstract = True
+    def __str__(self):
+        return self.name
