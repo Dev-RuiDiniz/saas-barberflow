@@ -1,8 +1,7 @@
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-
-router = DefaultRouter()
+from django.urls import path
+from .views import SchedulingListCreateView, SchedulingDetailView
 
 urlpatterns = [
-    path("", include(router.urls)),
+    path("", SchedulingListCreateView.as_view()),
+    path("<int:pk>/", SchedulingDetailView.as_view()),
 ]

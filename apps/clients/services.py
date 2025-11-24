@@ -1,1 +1,4 @@
-# Lógica de negócio que não deve ficar nos views
+from .models import Client
+
+def create_client(tenant, validated_data):
+    return Client.objects.create(tenant=tenant, **validated_data)
